@@ -1,0 +1,18 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPath": "/mgr-tenants/tenants",
+        "method": "GET",
+        "queryParameters": {
+          "query": {
+            "equalTo": "cql.allRecords=1"
+          }
+        }
+      },
+      "response": {
+
+      }
+    }
+  ]
+}
