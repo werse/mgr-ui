@@ -1,6 +1,6 @@
-import type { ExecutionStatus } from '@/types/flow/ExecutionStatus.ts';
+import type { ExecutionStatus } from '@/types/mgr-tenant-entitlements/flow';
 
-export type FlowStage = {
+export interface FlowStage {
   flowId: string;
   name: string;
   status: ExecutionStatus;

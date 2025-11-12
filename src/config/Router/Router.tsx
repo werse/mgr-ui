@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { TenantsPage } from '@/pages/TenantsPage';
-import { ApplicationsPage } from '@/pages/Applications';
+import { ApplicationsPage } from '@/pages/ApplicationsPage';
 import { RootPage } from '@/pages/RootPage';
 import { NotFoundPage } from '@/pages/NotFound';
 import { EntitlementsPage } from '@/pages/EntitlementsPage';

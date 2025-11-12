@@ -26,7 +26,7 @@ export const HomePage = () => {
   return (
     <div className="h-full w-full p-6">
       <div className={'mb-6'}>
-        <h1 className={h1}>Welcome to Eureka UI</h1>
+        <h1 className={h1}>Welcome to Eureka Dashboard</h1>
       </div>
       <div className={'text-foreground/80'}>
         <p className={`${p} indent-2`}>

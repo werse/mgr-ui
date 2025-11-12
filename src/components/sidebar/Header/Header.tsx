@@ -11,7 +11,7 @@ export const Header = () => {
         <GalleryVerticalEnd className="size-4" />
       </div>
       <div className="flex flex-col gap-0.5 leading-none">
-        <h2 className={h4}>Eureka UI</h2>
+        <h2 className={h4}>Eureka Dashboard</h2>
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
-import type { ExecutionStatus } from '@/types/flow/ExecutionStatus.ts';
-import type { EntitlementType } from '@/types/flow/EntitlementType.ts';
-import type { FlowStage } from '@/types/flow/FlowStage.ts';
+import type { EntitlementType, ExecutionStatus, FlowStage } from '@/types/mgr-tenant-entitlements/flow';
 
 export type ApplicationFlow = {
   id: string;

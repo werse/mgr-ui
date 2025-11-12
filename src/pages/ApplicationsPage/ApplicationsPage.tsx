@@ -1,17 +1,17 @@
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import { TenantClient } from '@/integration/clients/TenantClient';
-import { useQuery } from '@tanstack/react-query';
-import { CqlQuery } from '@/lib/cql-query';
-import { DEFAULT_OFFSET, getBackReference, getIntParamOrDefault } from '@/lib/utils.ts';
-import { PaginationFooter } from '@/components/PaginationFooter';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/ui/button.tsx';
 import { DynamicIcon } from 'lucide-react/dynamic';
-import { PageHeader } from '@/components/PageHeader';
+import { ScrollArea } from '@/components/ui/scroll-area.tsx';
+import { DEFAULT_OFFSET, getBackReference, getIntParamOrDefault } from '@/lib/utils.ts';
+import { PaginationFooter } from '@/components/PaginationFooter';
+import { CqlQuery } from '@/lib/cql-query';
+import { useQuery } from '@tanstack/react-query';
+import { ApplicationClient } from '@/integration/clients/ApplicationClient.ts';
 import { AppDataTable } from '@/components/AppDataTable';
-import type { Tenant } from '@/types/tenant';
+import type { AppDescriptor } from '@/types/mgr-applications';
 
-export const TenantsPage = () => {
+export const ApplicationsPage = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const pageLimit = 50;
@@ -21,8 +21,8 @@ export const TenantsPage = () => {
 
   const query = CqlQuery.matchAll();
   const { isPending, data } = useQuery({
-    queryKey: ['tenants', { query, limit: pageLimit, offset }],
-    queryFn: () => TenantClient.findByQuery({ query, limit: pageLimit, offset }),
+    queryKey: ['applications', { query, limit: pageLimit, offset }],
+    queryFn: () => ApplicationClient.findByQuery({ query, limit: pageLimit, offset, full: false }),
   });
 
   if (isPending) {
@@ -33,15 +33,19 @@ export const TenantsPage = () => {
     return <div className="p-6">Tenants not found</div>;
   }
 
-  const renderTenantNameCell = (tenant: Tenant) => (
-    <Link to={`/tenants/${tenant.id}/details`} state={getBackReference(location)} className="hover:underline">
-      {tenant.name}
+  const renderAppDescriptorIdCell = (appDescriptor: AppDescriptor) => (
+    <Link
+      to={`/application/${appDescriptor.id}/details`}
+      state={getBackReference(location)}
+      className="hover:underline"
+    >
+      {appDescriptor.id}
     </Link>
   );
 
   return (
     <div className="flex flex-col h-full">
-      <PageHeader title="Tenants" totalRecords={data.totalRecords}>
+      <PageHeader title="Application Descriptors" totalRecords={data.totalRecords}>
         <div className="ml-auto flex justify-items-end items-center mr-1">
           <Button size={'sm'} variant={'default'}>
             <DynamicIcon name="plus" />
@@ -51,21 +55,21 @@ export const TenantsPage = () => {
       </PageHeader>
       <ScrollArea className="overflow-auto flex-1 p-4">
         <AppDataTable
-          data={data.tenants}
-          globalKey={'tenants'}
-          numerationOffset={offset}
+          data={data.applicationDescriptors}
+          globalKey={'apps'}
+          numerationOffset={0}
           columnDefinitions={[
             {
               title: 'Name',
               key: 'name',
-              headerClassName: 'w-[25%]',
-              render: renderTenantNameCell,
-              cellClassName: 'max-w-[20ch] truncate',
+              headerClassName: 'w-[35%]',
+              render: renderAppDescriptorIdCell,
+              cellClassName: 'max-w-[60ch] truncate',
             },
             {
               title: 'Description',
               key: 'description',
-              render: (tenant: Tenant) => <span>{tenant.description || 'N/A'}</span>,
+              render: (appDesc: AppDescriptor) => <span>{appDesc.description || 'N/A'}</span>,
               cellClassName: 'max-w-[40ch] truncate',
             },
           ]}

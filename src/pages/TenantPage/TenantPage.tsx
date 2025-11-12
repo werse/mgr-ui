@@ -1,4 +1,4 @@
-import { TenantClient } from '@/integration/tenant-client';
+import { TenantClient } from '@/integration/clients';
 import { Spinner } from '@/components/ui/spinner';
 import { useQuery } from '@tanstack/react-query';
 import type { Tenant } from '@/types/tenant';
@@ -12,7 +12,7 @@ export const TenantPage = () => {
   const { tenantId } = useParams<{ tenantId: string }>();
   const { isPending, data: tenant } = useQuery<Tenant>({
     queryKey: ['tenant-by-id', tenantId],
-    queryFn: () => TenantClient.getTenantById(tenantId!),
+    queryFn: () => TenantClient.getById(tenantId!),
   });
 
   if (isPending) {

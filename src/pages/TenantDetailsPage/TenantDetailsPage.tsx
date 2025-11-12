@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table.tsx
 import { AnyValuePrinter } from '@/components/AnyValuePrinter';
 import { useQuery } from '@tanstack/react-query';
 import type { Tenant } from '@/types/tenant';
-import { TenantClient } from '@/integration/tenant-client';
+import { TenantClient } from '@/integration/clients';
 import { Spinner } from '@/components/ui/spinner.tsx';
 import { useParams } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ export const TenantDetailsPage = () => {
   const { tenantId } = useParams<{ tenantId: string }>();
   const { isPending, data: tenant } = useQuery<Tenant>({
     queryKey: ['tenant-by-id', tenantId],
-    queryFn: () => TenantClient.getTenantById(tenantId!),
+    queryFn: () => TenantClient.getById(tenantId!),
   });
 
   if (isPending) {

@@ -17,10 +17,8 @@ export class TenantClient {
    * @param {string|number} id - The tenant ID
    * @returns {Promise<Object>} Tenant object
    */
-  static async getTenantById(id: string): Promise<Tenant> {
+  static async getById(id: string): Promise<Tenant> {
     const pathVariables = [id];
     return httpClient.get('/tenants/{id}', { pathVariables });
   }
 }
-
-export const tenantClient = new TenantClient();

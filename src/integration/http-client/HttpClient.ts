@@ -5,7 +5,7 @@ const GATEWAY_URL = 'http://localhost:8000';
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 class HttpClient {
-  private baseURL: string;
+  private readonly baseURL: string;
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;
