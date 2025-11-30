@@ -28,12 +28,7 @@ export const ApplicationFlowsTable = ({ applicationFlows }: Props) => {
             key: 'type',
             headerClassName: 'w-[6%]',
             cellClassName: 'uppercase',
-            render: (flow) => <span>{flow.type}</span>,
-          },
-          {
-            title: 'Id',
-            key: 'id',
-            render: (f) => <TableLink to={applicationFlowDetailsRef(f.id)} title={f.id} />,
+            render: (f) => <TableLink to={applicationFlowDetailsRef(f.id)} title={f.type} />,
           },
           {
             title: 'Application Id',

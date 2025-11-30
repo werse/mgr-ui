@@ -30,8 +30,8 @@ export const ApplicationFlowsPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <PageHeader title="Entitlement Flows" totalRecords={data.totalRecords} />
+    <div className="flex flex-col h-full min-w-full">
+      <PageHeader title="Application Flows" totalRecords={data.totalRecords} />
       <ApplicationFlowsTable applicationFlows={data.applicationFlows} />
       <PaginationFooter totalRecords={data.totalRecords} pageLimit={limit} currentOffset={offset} />
     </div>

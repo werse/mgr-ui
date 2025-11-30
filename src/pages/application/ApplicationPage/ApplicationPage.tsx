@@ -50,7 +50,7 @@ export const ApplicationPage = () => {
     <div className="w-full h-full flex flex-col justify-center">
       <PageHeader title={application.name} backReference={backReference} />
       <NavigationTabs tabElements={tabElements} redirectState={{ from: backReference }} />
-      <div className={'h-full flex'}>
+      <div className={'h-full flex w-full min-w-full'}>
         <Outlet />
       </div>
     </div>

@@ -30,7 +30,7 @@ export const EntitlementFlowsPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full min-w-full">
       <PageHeader title="Entitlement Flows" totalRecords={data.totalRecords} />
       <EntitlementFlowsTable entitlementFlows={data.flows} idxOffset={offset} />
       <PaginationFooter totalRecords={data.totalRecords} pageLimit={limit} currentOffset={offset} />

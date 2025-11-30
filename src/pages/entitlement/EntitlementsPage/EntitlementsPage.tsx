@@ -31,7 +31,7 @@ export const EntitlementsPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full min-w-full">
       <PageHeader title="Tenant Entitlements" totalRecords={data.totalRecords}>
         <div className="ml-auto flex justify-items-end items-center mr-1">
           <Button size={'sm'} variant={'default'}>
