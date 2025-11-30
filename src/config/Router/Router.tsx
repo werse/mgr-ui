@@ -1,15 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { TenantsPage } from '@/pages/TenantsPage';
-import { ApplicationsPage } from '@/pages/ApplicationsPage';
-import { RootPage } from '@/pages/RootPage';
-import { NotFoundPage } from '@/pages/NotFound';
-import { EntitlementsPage } from '@/pages/EntitlementsPage';
-import { HomePage } from '@/pages/HomePage/HomePage.tsx';
-import { TenantPage } from '@/pages/TenantPage';
-import { TenantDetailsPage } from '@/pages/TenantDetailsPage';
-import { EntitlementFlowsPage } from '@/pages/EntitlementFlowsPage/EntitlementFlowsPage.tsx';
-import { EntitlementFlowPage } from '@/pages/EntitlementFlowPage';
-import { FlowStagesPage } from '@/pages/FlowStages/FlowStagesPage.tsx';
+import { HomePage, NotFoundPage, RootPage } from '@/pages/common';
+import { TenantDetailsPage, TenantPage, TenantsPage } from '@/pages/tenant';
+import { ApplicationDetailsPage, ApplicationPage, ApplicationsPage } from '@/pages/application';
+import {
+  ApplicationFlowsPage,
+  EntitlementFlowDetailsPage,
+  EntitlementFlowPage,
+  EntitlementFlowsPage,
+  EntitlementsPage,
+} from '@/pages/entitlement';
+import { ModuleRegistryPage, ModulesDiscoveryPage } from '@/pages/module';
 
 export const ROUTER = createBrowserRouter([
   {
@@ -23,10 +23,6 @@ export const ROUTER = createBrowserRouter([
       {
         path: 'tenants',
         Component: TenantsPage,
-      },
-      {
-        path: 'tenants/configuration',
-        Component: NotFoundPage,
       },
       {
         path: 'tenants/:tenantId',
@@ -55,26 +51,52 @@ export const ROUTER = createBrowserRouter([
         Component: ApplicationsPage,
       },
       {
+        path: 'applications/:applicationId',
+        Component: ApplicationPage,
+        children: [
+          {
+            path: 'details',
+            Component: ApplicationDetailsPage,
+          },
+          {
+            path: '',
+            Component: ApplicationDetailsPage,
+          },
+        ],
+      },
+      {
         path: 'entitlements',
         Component: EntitlementsPage,
       },
       {
-        path: 'entitlements/entitlement-flows',
+        path: 'entitlement-flows',
         Component: EntitlementFlowsPage,
       },
       {
-        path: 'entitlements/entitlement-flows/:flowId',
+        path: '/modules/registry',
+        Component: ModuleRegistryPage,
+      },
+      {
+        path: '/modules/discovery',
+        Component: ModulesDiscoveryPage,
+      },
+      {
+        path: 'entitlement-flows/:flowId',
         Component: EntitlementFlowPage,
-        children:[
+        children: [
           {
             path: '',
-            Component: FlowStagesPage
+            Component: EntitlementFlowDetailsPage,
           },
           {
-            path: 'stages',
-            Component: FlowStagesPage
-          }
-        ]
+            path: 'details',
+            Component: EntitlementFlowDetailsPage,
+          },
+          {
+            path: 'application-flows',
+            Component: ApplicationFlowsPage,
+          },
+        ],
       },
       {
         path: '*',

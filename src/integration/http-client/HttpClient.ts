@@ -1,6 +1,7 @@
 import type { PathVariable, QueryParams, RequestOptions } from '@/types/api';
 
 const GATEWAY_URL = 'http://localhost:8000';
+// const GATEWAY_URL = 'https://folio-etesting-snapshot-kong.ci.folio.org';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 

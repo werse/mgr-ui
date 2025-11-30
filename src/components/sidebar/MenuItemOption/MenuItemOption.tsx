@@ -10,12 +10,12 @@ interface Props {
 }
 
 export const MenuItemOption = ({ navItem, basePath, groupTitle }: Props) => {
-  const redirectPath = `${basePath}${navItem.url}`;
-  const location = useLocation()
+
+  const location = useLocation();
   return (
     <SidebarMenuSubItem key={`${groupTitle}-${navItem.title}`}>
-      <SidebarMenuSubButton asChild isActive={location.pathname === redirectPath} className="w-full">
-        <Link to={redirectPath}>
+      <SidebarMenuSubButton asChild isActive={location.pathname === `${navItem.url}`} className="w-full">
+        <Link to={`${navItem.url}`}>
           <div>{navItem.icon && <DynamicIcon name={navItem.icon} />}</div>
           <span className="select-none">{navItem.title}</span>
         </Link>

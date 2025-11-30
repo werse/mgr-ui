@@ -173,8 +173,12 @@ export class CqlQuery {
   /**
    * Creates a CqlQuery that matches all records (no filter)
    */
-  static matchAll(): string {
-    return new CqlQuery('cql.allRecords==1').toText();
+  static matchAll(): CqlQuery {
+    return new CqlQuery('cql.allRecords==1');
+  }
+
+  static rawQuery(rawQuery: string): CqlQuery {
+    return new CqlQuery(rawQuery);
   }
 }
 

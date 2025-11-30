@@ -10,6 +10,7 @@ export interface EntitlementFlow {
   status: ExecutionStatus;
   type: EntitlementType;
   tenantId: string;
+  tenantName?: string
   startedAt: string;
   finishedAt: string;
   stages: FlowStage[];

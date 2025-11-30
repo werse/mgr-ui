@@ -23,7 +23,7 @@ export const PageHeader = ({ title, totalRecords, backReference, children, class
             variant="secondary"
             size="lg"
             className={
-              'max-w-25 absolute right-0 top-14 w-25 min-w-25 mr-2 shadow-lg z-30 opacity-40 hover:opacity-100'
+              'max-w-25 absolute right-0 top-14 w-25 min-w-25 mr-2 shadow-lg z-30 opacity-30 hover:opacity-100'
             }
           >
             <DynamicIcon name="undo"/>

@@ -9,35 +9,25 @@ export const NAVIGATION_LAYOUT: SidebarLayout = {
       items: [
         {
           title: 'Tenants',
+          url: '/tenants',
           icon: 'library',
-          url: '',
-        },
-        {
-          title: 'Configuration',
-          url: '/configuration',
-          icon: 'cog'
         },
       ],
     },
     {
       title: 'Applications',
       url: '/applications',
-      icon: 'app-window-mac',
+      icon: 'layout-panel-left',
       items: [
         {
           title: 'Applications',
-          url: '',
-          icon: 'app-window-mac',
-        },
-        {
-          title: 'Configuration',
-          url: '/configuration',
-          icon: 'cog'
+          url: '/applications',
+          icon: 'layout-panel-left',
         },
         {
           title: 'Application Builder',
           url: '/application-builder',
-          icon: 'wrench'
+          icon: 'wrench',
         },
       ],
     },
@@ -48,46 +38,36 @@ export const NAVIGATION_LAYOUT: SidebarLayout = {
       items: [
         {
           title: 'Entitlements',
-          url: '',
+          url: '/entitlements',
           icon: 'box',
         },
         {
           title: 'Entitlement Flows',
           url: '/entitlement-flows',
-          icon: 'workflow'
+          icon: 'workflow',
         },
         {
           title: 'Application Flows',
           url: '/application-flows',
-          icon: 'workflow'
-        },
-        {
-          title: 'Configuration',
-          url: '/configuration',
-          icon: 'cog'
+          icon: 'workflow',
         },
       ],
     },
     {
-      title: 'Deployments',
-      url: '/deployments',
-      icon: 'layers',
+      title: 'Modules',
+      url: '/modules',
+      icon: 'puzzle',
       items: [
         {
-          title: 'Deployments',
-          url: '',
-          icon: 'layers',
+          title: 'Registry',
+          url: '/module-registry',
+          icon: 'puzzle',
         },
         {
-          title: 'Deployment Requests',
-          url: '/requests',
-          icon: 'radio'
-        },
-        {
-          title: 'Configuration',
-          url: '/configuration',
-          icon: 'cog'
-        },
+          title: 'Discovery',
+          url: '/module-discovery',
+          icon: 'telescope',
+        }
       ],
     },
   ],
