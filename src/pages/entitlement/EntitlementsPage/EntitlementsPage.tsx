@@ -40,7 +40,7 @@ export const EntitlementsPage = () => {
           </Button>
         </div>
       </PageHeader>
-      <EntitlementsTable entitlements={data.entitlements} numOffset={offset} />
+      <EntitlementsTable entitlements={data.entitlements} idxOffset={offset} />
       <PaginationFooter totalRecords={data.totalRecords} pageLimit={limit} currentOffset={offset} />
     </div>
   );

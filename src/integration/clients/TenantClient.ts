@@ -4,6 +4,7 @@ import type { QueryParams } from '@/types/api/QueryParams';
 import { CqlQuery } from '@/lib/cql-query';
 
 export class TenantClient {
+
   /**
    * Get all tenants
    * @param {Object} queryParams - Optional query parameters

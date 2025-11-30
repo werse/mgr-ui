@@ -6,51 +6,54 @@ const GATEWAY_URL = 'http://localhost:8000';
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 class HttpClient {
-  private readonly baseURL: string;
-
-  constructor(baseURL: string) {
-    this.baseURL = baseURL;
-  }
 
   /**
    * GET request
    */
   async get<T = unknown>(endpoint: string, requestOptions: RequestOptions = {}): Promise<T> {
-    return this.request<T>('GET', endpoint, requestOptions);
+    return this.request<T>(GATEWAY_URL, 'GET', endpoint, requestOptions);
+  }
+
+  /**
+   * GET request
+   */
+  async getAbs<T = unknown>(baseUrl: string, endpoint: string, requestOptions: RequestOptions = {}): Promise<T> {
+    return this.request<T>(baseUrl, 'GET', endpoint, requestOptions);
   }
 
   /**
    * POST request
    */
   async post<T = unknown>(endpoint: string, requestOptions: RequestOptions = {}): Promise<T> {
-    return this.request<T>('POST', endpoint, requestOptions);
+    return this.request<T>(GATEWAY_URL, 'POST', endpoint, requestOptions);
   }
 
   /**
    * DELETE request
    */
   async delete<T = unknown>(endpoint: string, requestOptions: RequestOptions = {}): Promise<T> {
-    return this.request<T>('DELETE', endpoint, requestOptions);
+    return this.request<T>(GATEWAY_URL, 'DELETE', endpoint, requestOptions);
   }
 
   /**
    * PUT request
    */
   async put<T = unknown>(endpoint: string, requestOptions: RequestOptions): Promise<T> {
-    return this.request<T>('PUT', endpoint, requestOptions);
+    return this.request<T>(GATEWAY_URL, 'PUT', endpoint, requestOptions);
   }
 
   /**
    * PATCH request
    */
   async patch<T = unknown>(endpoint: string, requestOptions: RequestOptions = {}): Promise<T> {
-    return this.request<T>('PATCH', endpoint, requestOptions);
+    return this.request<T>(GATEWAY_URL, 'PATCH', endpoint, requestOptions);
   }
 
   /**
    * Generic request method
    */
   private async request<T = unknown>(
+    baseUrl: string,
     method: HttpMethod,
     endpoint: string,
     options: RequestOptions = {},
@@ -58,7 +61,7 @@ class HttpClient {
     const { pathVariables = [], queryParams = {}, body = null, headers = {} } = options;
 
     try {
-      const url = this.buildURL(endpoint, pathVariables, queryParams);
+      const url = this.buildURL(baseUrl, endpoint, pathVariables, queryParams);
 
       const requestOptions: RequestInit = {
         method,
@@ -66,6 +69,7 @@ class HttpClient {
           'Content-Type': 'application/json',
           ...headers,
         },
+        signal: AbortSignal.timeout(60000)
       };
 
       if (body) {
@@ -78,7 +82,6 @@ class HttpClient {
         return Promise.reject(response);
       }
 
-      // Handle empty responses
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         return await response.json();
@@ -95,11 +98,12 @@ class HttpClient {
    * Build URL with path variables and query parameters
    */
   private buildURL(
+    baseUrl: string,
     endpoint: string,
     pathVariables: PathVariable[] = [],
     queryParams: QueryParams = {},
   ): string {
-    let url = `${this.baseURL}${endpoint}`;
+    let url = `${baseUrl}${endpoint}`;
 
     pathVariables.forEach((variable) => {
       url = url.replace(/\{[^}]+}/, String(variable));
@@ -121,4 +125,4 @@ class HttpClient {
   }
 }
 
-export const httpClient = new HttpClient(GATEWAY_URL);
+export const httpClient = new HttpClient();

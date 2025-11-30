@@ -1,7 +1,7 @@
 import { EntitiesDataTable } from '@/components/tables';
 import { FlowIndicator } from '@/components/FlowIndication';
 import { TableLink } from '@/components/TableLink';
-import { entitlementFlowDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
+import { applicationFlowDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
 import type { EntitlementFlow } from '@/types/mgr-tenant-entitlements/flow';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
@@ -21,19 +21,14 @@ export const EntitlementFlowsTable = ({ entitlementFlows, idxOffset }: Props) =>
             title: '',
             key: 'grade',
             headerClassName: 'w-[2%]',
-            render: (flow) => <FlowIndicator status={flow.status} />,
+            render: (f) => <FlowIndicator status={f.status} />,
           },
           {
             title: 'Type',
             key: 'type',
-            headerClassName: 'w-[6%]',
+            headerClassName: 'w-[10%]',
             cellClassName: 'uppercase',
-            render: (flow) => <span>{flow.type}</span>,
-          },
-          {
-            title: 'Id',
-            key: 'id',
-            render: (f) => <TableLink to={entitlementFlowDetailsRef(f.id)} title={f.id} />,
+            render: (f) => <TableLink to={applicationFlowDetailsRef(f.id)} title={f.type} />,
           },
           {
             title: 'Tenant Name',
@@ -43,16 +38,16 @@ export const EntitlementFlowsTable = ({ entitlementFlows, idxOffset }: Props) =>
           {
             title: 'Start Time',
             key: 'startedAt',
-            headerClassName: 'w-[18%]',
-            cellClassName: 'max-w-[20ch] truncate',
-            render: (flow: EntitlementFlow) => <span>{flow.startedAt}</span>,
+            headerClassName: 'w-[25%]',
+            cellClassName: 'max-w-[10ch] truncate',
+            render: (f) => <span>{f.startedAt}</span>,
           },
           {
             title: 'End Time',
             key: 'finishedAt',
-            headerClassName: 'w-[18%]',
-            cellClassName: 'max-w-[20ch] truncate',
-            render: (flow: EntitlementFlow) => <span>{flow.finishedAt}</span>,
+            headerClassName: 'w-[25%]',
+            cellClassName: 'max-w-[10ch] truncate',
+            render: (f) => <span>{f.finishedAt}</span>,
           },
         ]}
       />

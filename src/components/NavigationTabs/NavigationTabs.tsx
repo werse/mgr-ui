@@ -14,7 +14,6 @@ type Props = {
 };
 
 export const NavigationTabs = ({ tabElements, redirectState }: Props) => {
-  console.log({ tabElements });
   let getDefaultValue = tabElements.filter((tab) => tab.default)[0]?.title || tabElements[0]?.title || '';
   return (
     <div className="mt-2 pr-4 pl-4">

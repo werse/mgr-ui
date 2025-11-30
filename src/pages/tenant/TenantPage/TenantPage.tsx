@@ -36,7 +36,7 @@ export const TenantPage = () => {
     },
     {
       title: 'Attributes',
-      key: 'tenant-page-details',
+      key: 'tenant-page-attributes',
       to: `/tenants/${tenantId}/attributes`,
     },
     {

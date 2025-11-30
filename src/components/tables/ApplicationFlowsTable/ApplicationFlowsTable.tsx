@@ -44,14 +44,14 @@ export const ApplicationFlowsTable = ({ applicationFlows }: Props) => {
             title: 'Start Time',
             key: 'startedAt',
             headerClassName: 'w-[18%]',
-            cellClassName: 'max-w-[20ch] truncate',
+            cellClassName: 'max-w-[10ch] truncate',
             render: (f) => <span>{f.startedAt}</span>,
           },
           {
             title: 'End Time',
             key: 'finishedAt',
             headerClassName: 'w-[18%]',
-            cellClassName: 'max-w-[20ch] truncate',
+            cellClassName: 'max-w-[10ch] truncate',
             render: (f) => <span>{f.finishedAt}</span>,
           },
         ]}

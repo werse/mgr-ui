@@ -1,19 +1,16 @@
+import type { ModuleDescriptor } from '@/types/mgr-applications';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { EntitiesDataTable } from '@/components/tables';
-import type { Entitlement } from '@/types/mgr-tenant-entitlements';
 
 interface Props {
-  entitlements: Entitlement[];
+  modules: ModuleDescriptor[];
   idxOffset?: number;
-  useTenantRefs?: boolean;
-  useAppRefs?: boolean;
 }
-
-export const EntitlementsTable = ({ entitlements, idxOffset }: Props) => {
+export const ModulesTable = ({ modules, idxOffset }: Props) => {
   return (
     <ScrollArea className="overflow-auto flex-1 p-4">
       <EntitiesDataTable
-        data={entitlements}
+        data={modules}
         globalKey={'apps'}
         numerationOffset={idxOffset || 0}
         columnDefinitions={[
@@ -21,14 +18,8 @@ export const EntitlementsTable = ({ entitlements, idxOffset }: Props) => {
             title: 'Application ID',
             key: 'mte-application-id',
             headerClassName: 'w-[35%]',
-            render: (entitlement) => <span>{entitlement.applicationId || 'N/A'}</span>,
+            render: (md) => <span>{md.name || 'N/A'}</span>,
             cellClassName: 'max-w-[60ch] truncate',
-          },
-          {
-            title: 'Tenant',
-            key: 'mte-tenant-id',
-            render: (entitlement) => <span>{entitlement.tenantName || entitlement.tenantId}</span>,
-            cellClassName: 'max-w-[40ch] truncate',
           },
         ]}
       />

@@ -55,14 +55,9 @@ export const NAVIGATION_LAYOUT: SidebarLayout = {
     },
     {
       title: 'Modules',
-      url: '/modules',
+      url: '/module-discovery',
       icon: 'puzzle',
       items: [
-        {
-          title: 'Registry',
-          url: '/module-registry',
-          icon: 'puzzle',
-        },
         {
           title: 'Discovery',
           url: '/module-discovery',
