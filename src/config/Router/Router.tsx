@@ -1,6 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HomePage, NotFoundPage, RootPage } from '@/pages/common';
-import { TenantDetailsPage, TenantPage, TenantsPage } from '@/pages/tenant';
+import {
+  TenantAttributesPage,
+  TenantDetailsPage,
+  TenantEntitlementFlowsPage,
+  TenantEntitlementsPage,
+  TenantPage,
+  TenantsPage,
+} from '@/pages/tenant';
 import { ApplicationDetailsPage, ApplicationPage, ApplicationsPage } from '@/pages/application';
 import {
   ApplicationFlowsPage,
@@ -29,20 +36,24 @@ export const ROUTER = createBrowserRouter([
         Component: TenantPage,
         children: [
           {
-            path: 'details',
-            Component: TenantDetailsPage,
-          },
-          {
             path: '',
             Component: TenantDetailsPage,
           },
           {
+            path: 'details',
+            Component: TenantDetailsPage,
+          },
+          {
+            path: 'attributes',
+            Component: TenantAttributesPage,
+          },
+          {
             path: 'entitlements',
-            Component: NotFoundPage,
+            Component: TenantEntitlementsPage,
           },
           {
             path: 'entitlement-flows',
-            Component: NotFoundPage,
+            Component: TenantEntitlementFlowsPage,
           },
         ],
       },
@@ -55,12 +66,20 @@ export const ROUTER = createBrowserRouter([
         Component: ApplicationPage,
         children: [
           {
+            path: '',
+            Component: ApplicationDetailsPage,
+          },
+          {
             path: 'details',
             Component: ApplicationDetailsPage,
           },
           {
-            path: '',
-            Component: ApplicationDetailsPage,
+            path: 'entitlements',
+            Component: TenantEntitlementsPage,
+          },
+          {
+            path: 'flows',
+            Component: ApplicationFlowsPage,
           },
         ],
       },
@@ -71,14 +90,6 @@ export const ROUTER = createBrowserRouter([
       {
         path: 'entitlement-flows',
         Component: EntitlementFlowsPage,
-      },
-      {
-        path: '/modules/registry',
-        Component: ModuleRegistryPage,
-      },
-      {
-        path: '/modules/discovery',
-        Component: ModulesDiscoveryPage,
       },
       {
         path: 'entitlement-flows/:flowId',
@@ -97,6 +108,18 @@ export const ROUTER = createBrowserRouter([
             Component: ApplicationFlowsPage,
           },
         ],
+      },
+      {
+        path: 'application-flows',
+        Component: ApplicationFlowsPage,
+      },
+      {
+        path: 'module-registry',
+        Component: ModuleRegistryPage,
+      },
+      {
+        path: 'module-discovery',
+        Component: ModulesDiscoveryPage,
       },
       {
         path: '*',

@@ -1,2 +1,2 @@
-export { ModulesDiscoveryPage } from '@/pages/module/ModulesDiscoveryPage/ModulesDiscoveryPage.tsx';
-export { ModuleRegistryPage } from '@/pages/module/ModuleRegistryPage/ModuleRegistryPage.tsx';
+export { ModulesDiscoveryPage } from '@/pages/module/ModulesDiscoveryPage';
+export { ModuleRegistryPage } from '@/pages/module/ModuleRegistryPage';

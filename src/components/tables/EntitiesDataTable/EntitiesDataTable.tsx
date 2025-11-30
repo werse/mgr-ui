@@ -29,7 +29,7 @@ export const EntitiesDataTable = <T,>({ data, globalKey, numerationOffset = 0, c
     <Table>
       <TableHeader>
         <TableRow className="font-semibold text-sm select-text hover:bg-transparent text-foreground/80">
-          <TableCell className="w-[3%]">#</TableCell>
+          <TableCell className="w-[2%]">#</TableCell>
           {columnDefinitions.map((cd) => (
             <TableCell
               key={`th-${globalKey.toLowerCase()}-${cd.title.toLowerCase()}`}

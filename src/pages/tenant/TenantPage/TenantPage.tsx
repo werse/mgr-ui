@@ -50,9 +50,10 @@ export const TenantPage = () => {
       to: `/tenants/${tenantId}/entitlement-flows`,
     },
   ];
+
   return (
     <div className="w-full h-full flex flex-col justify-center">
-      <PageHeader title={tenant.name} backReference={backReference} />
+      <PageHeader title={`Tenant: ${tenant.name}`} backReference={backReference} />
       <NavigationTabs tabElements={tabElements} redirectState={{ from: backReference }} />
       <div className={'h-full flex'}>
         <Outlet />

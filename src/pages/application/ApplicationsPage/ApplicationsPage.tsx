@@ -1,18 +1,15 @@
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/ui/button.tsx';
 import { DynamicIcon } from 'lucide-react/dynamic';
-import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { DEFAULT_OFFSET, getBackReference, getIntParamOrDefault } from '@/lib/utils.ts';
+import { DEFAULT_OFFSET, getIntParamOrDefault } from '@/lib/utils.ts';
 import { PaginationFooter } from '@/components/PaginationFooter';
 import { CqlQuery } from '@/lib/cql-query';
 import { useQuery } from '@tanstack/react-query';
 import { ApplicationClient } from '@/integration/clients/ApplicationClient.ts';
-import { EntitiesDataTable } from '@/components/EntitiesDataTable';
-import type { AppDescriptor } from '@/types/mgr-applications';
+import { ApplicationsTable } from '@/components/tables';
 
 export const ApplicationsPage = () => {
-  const location = useLocation();
   const [searchParams] = useSearchParams();
   const pageLimit = 50;
 
@@ -33,16 +30,6 @@ export const ApplicationsPage = () => {
     return <div className="p-6">Applications not found</div>;
   }
 
-  const renderAppDescriptorIdCell = (appDescriptor: AppDescriptor) => (
-    <Link
-      to={`/applications/${appDescriptor.id}/details`}
-      state={getBackReference(location)}
-      className="hover:underline"
-    >
-      {appDescriptor.id}
-    </Link>
-  );
-
   return (
     <div className="flex flex-col h-full">
       <PageHeader title="Application Descriptors" totalRecords={data.totalRecords}>
@@ -53,28 +40,7 @@ export const ApplicationsPage = () => {
           </Button>
         </div>
       </PageHeader>
-      <ScrollArea className="overflow-auto flex-1 p-4">
-        <EntitiesDataTable
-          data={data.applicationDescriptors}
-          globalKey={'apps'}
-          numerationOffset={0}
-          columnDefinitions={[
-            {
-              title: 'Name',
-              key: 'name',
-              headerClassName: 'w-[35%]',
-              render: renderAppDescriptorIdCell,
-              cellClassName: 'max-w-[60ch] truncate',
-            },
-            {
-              title: 'Description',
-              key: 'description',
-              render: (appDesc: AppDescriptor) => <span>{appDesc.description || 'N/A'}</span>,
-              cellClassName: 'max-w-[40ch] truncate',
-            },
-          ]}
-        />
-      </ScrollArea>
+      <ApplicationsTable applications={data.applicationDescriptors} idxOffset={offset} />
       <PaginationFooter totalRecords={data.totalRecords} pageLimit={pageLimit} currentOffset={offset} />
     </div>
   );

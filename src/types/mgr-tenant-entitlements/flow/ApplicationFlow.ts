@@ -4,6 +4,7 @@ export type ApplicationFlow = {
   id: string;
   applicationId: string;
   tenantId: string;
+  tenantName?: string; // can be loaded by UI
   flowId: string;
   type: EntitlementType;
   status: ExecutionStatus;

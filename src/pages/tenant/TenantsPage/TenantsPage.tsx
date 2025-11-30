@@ -1,18 +1,15 @@
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { TenantClient } from '@/integration/clients/TenantClient';
 import { useQuery } from '@tanstack/react-query';
 import { CqlQuery } from '@/lib/cql-query';
-import { DEFAULT_OFFSET, getBackReference, getIntParamOrDefault } from '@/lib/utils.ts';
+import { DEFAULT_OFFSET, getIntParamOrDefault } from '@/lib/utils.ts';
 import { PaginationFooter } from '@/components/PaginationFooter';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button.tsx';
 import { DynamicIcon } from 'lucide-react/dynamic';
 import { PageHeader } from '@/components/PageHeader';
-import { EntitiesDataTable } from '@/components/EntitiesDataTable';
-import type { Tenant } from '@/types/tenant';
+import { TenantsTable } from '@/components/tables';
 
 export const TenantsPage = () => {
-  const location = useLocation();
   const [searchParams] = useSearchParams();
   const pageLimit = 50;
 
@@ -33,12 +30,6 @@ export const TenantsPage = () => {
     return <div className="p-6">Tenants not found</div>;
   }
 
-  const renderTenantNameCell = (tenant: Tenant) => (
-    <Link to={`/tenants/${tenant.id}/details`} state={getBackReference(location)} className="hover:underline">
-      {tenant.name}
-    </Link>
-  );
-
   return (
     <div className="flex flex-col h-full">
       <PageHeader title="Tenants" totalRecords={data.totalRecords}>
@@ -49,28 +40,7 @@ export const TenantsPage = () => {
           </Button>
         </div>
       </PageHeader>
-      <ScrollArea className="overflow-auto flex-1 p-4">
-        <EntitiesDataTable
-          data={data.tenants}
-          globalKey={'tenants'}
-          numerationOffset={offset}
-          columnDefinitions={[
-            {
-              title: 'Name',
-              key: 'name',
-              headerClassName: 'w-[25%]',
-              render: renderTenantNameCell,
-              cellClassName: 'max-w-[20ch] truncate',
-            },
-            {
-              title: 'Description',
-              key: 'description',
-              render: (tenant: Tenant) => <span>{tenant.description || 'N/A'}</span>,
-              cellClassName: 'max-w-[40ch] truncate',
-            },
-          ]}
-        />
-      </ScrollArea>
+      <TenantsTable tenants={data.tenants} offset={offset} />
       <PaginationFooter totalRecords={data.totalRecords} pageLimit={pageLimit} currentOffset={offset} />
     </div>
   );
