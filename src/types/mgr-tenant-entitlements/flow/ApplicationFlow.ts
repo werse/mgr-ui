@@ -1,7 +1,7 @@
 import type { EntitlementType, ExecutionStatus, FlowStage } from '@/types/mgr-tenant-entitlements/flow';
+import type { Identifiable } from '@/types/common';
 
-export type ApplicationFlow = {
-  id: string;
+export interface ApplicationFlow extends Identifiable {
   applicationId: string;
   tenantId: string;
   tenantName?: string; // can be loaded by UI
@@ -11,4 +11,4 @@ export type ApplicationFlow = {
   startedAt: string;
   finishedAt: string;
   stages: FlowStage[];
-};
+}

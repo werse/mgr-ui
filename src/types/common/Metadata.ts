@@ -1,4 +1,4 @@
-export type Metadata = {
+export interface Metadata {
   createdDate?: string;
   createdBy?: string;
   modifiedDate?: string;

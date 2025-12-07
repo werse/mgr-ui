@@ -10,11 +10,10 @@ export type NavigationTabDef = {
 
 type Props = {
   tabElements: NavigationTabDef[];
-  redirectState?: unknown;
 };
 
-export const NavigationTabs = ({ tabElements, redirectState }: Props) => {
-  let getDefaultValue = tabElements.filter((tab) => tab.default)[0]?.title || tabElements[0]?.title || '';
+export const NavigationTabs = ({ tabElements }: Props) => {
+  const getDefaultValue = tabElements.filter((tab) => tab.default)[0]?.title || tabElements[0]?.title || '';
   return (
     <div className="mt-2 pr-4 pl-4">
       <Tabs defaultValue={getDefaultValue} className="w-full">
@@ -32,7 +31,6 @@ export const NavigationTabs = ({ tabElements, redirectState }: Props) => {
             >
               <Link
                 to={tab.to}
-                state={redirectState}
                 className="pointer-events-auto flex w-full h-full z-50 inset-[2px] items-center justify-center -m-[2px]"
               >
                 <span className={'font-semibold'}>{tab.title}</span>

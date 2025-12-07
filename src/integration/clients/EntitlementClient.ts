@@ -20,9 +20,9 @@ export class EntitlementClient {
       const tenantsResult = await TenantClient.getByIds(tenantIds);
       const tenantsMap = new Map<string, string>(tenantsResult.tenants.map((t) => [t.id, t.name]));
       queryResult.entitlements.forEach((e) => (e.tenantName = tenantsMap.get(e.tenantId)));
-      return queryResult;
     }
 
+    queryResult.entitlements.forEach((e) => (e.id = e.applicationId + '_' + e.tenantId));
     return queryResult;
   }
 
@@ -46,7 +46,7 @@ export class EntitlementClient {
   ): Promise<ApplicationFlowsCollection> {
     const result = (await httpClient.get('/application-flows', { queryParams })) as ApplicationFlowsCollection;
     if (includeTenantNames) {
-      let tenantIds = getUniqueIdentifiers(result.applicationFlows, (e) => e.tenantId);
+      const tenantIds = getUniqueIdentifiers(result.applicationFlows, (e) => e.tenantId);
       const tenantsResult = await TenantClient.getByIds(tenantIds);
       const tenantsMap = new Map<string, string>(tenantsResult.tenants.map((t) => [t.id, t.name]));
       result.applicationFlows.forEach((flow) => (flow.tenantName = tenantsMap.get(flow.tenantId)));
@@ -59,5 +59,10 @@ export class EntitlementClient {
   static async getEntitlementFlowById(id: string): Promise<EntitlementFlow> {
     const pathVariables = [id];
     return httpClient.get('/entitlement-flows/{id}', { pathVariables });
+  }
+
+  static async getApplicationFlowById(id: string): Promise<EntitlementFlow> {
+    const pathVariables = [id];
+    return httpClient.get('/application-flows/{id}', { pathVariables });
   }
 }

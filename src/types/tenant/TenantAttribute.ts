@@ -1,8 +1,8 @@
-import type { Metadata } from '@/types/common/Metadata.ts';
+import type { Identifiable, Metadata } from '@/types/common';
 
-export type TenantAttribute = {
+export interface TenantAttribute extends Identifiable {
   id: string;
   key: string;
   value?: string;
-  metadata?: Metadata
+  metadata?: Metadata;
 }

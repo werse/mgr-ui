@@ -1,7 +1,7 @@
 import { EntitiesDataTable } from '@/components/tables';
 import { FlowIndicator } from '@/components/FlowIndication';
 import { TableLink } from '@/components/TableLink';
-import { applicationFlowDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
+import { entitlementFlowDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
 import type { EntitlementFlow } from '@/types/mgr-tenant-entitlements/flow';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
@@ -28,7 +28,7 @@ export const EntitlementFlowsTable = ({ entitlementFlows, idxOffset }: Props) =>
             key: 'type',
             headerClassName: 'w-[10%]',
             cellClassName: 'uppercase',
-            render: (f) => <TableLink to={applicationFlowDetailsRef(f.id)} title={f.type} />,
+            render: (f) => <TableLink to={entitlementFlowDetailsRef(f.id)} title={f.type} />,
           },
           {
             title: 'Tenant Name',

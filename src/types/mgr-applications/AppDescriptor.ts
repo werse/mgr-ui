@@ -1,7 +1,8 @@
 import type { Metadata } from '@/types/common';
 import type { AppDependency, Artifact, Module, ModuleDescriptor } from '@/types/mgr-applications';
+import type { Identifiable } from '@/types/common';
 
-export interface AppDescriptor extends Artifact {
+export interface AppDescriptor extends Artifact, Identifiable {
   /**
    * A description of application manager
    */

@@ -4,3 +4,4 @@ export { TenantDetailsPage } from '@/pages/tenant/TenantDetailsPage';
 export { TenantAttributesPage } from '@/pages/tenant/TenantAttributesPage';
 export { TenantEntitlementsPage } from '@/pages/tenant/TenantEntitlementsPage';
 export { TenantEntitlementFlowsPage } from '@/pages/tenant/TenantEntitlementFlowsPage';
+export { TenantApplicationFlowsPage } from '@/pages/tenant/TenantApplicationFlowsPage';

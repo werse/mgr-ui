@@ -2,13 +2,11 @@ import { TenantClient } from '@/integration/clients';
 import { Spinner } from '@/components/ui/spinner';
 import { useQuery } from '@tanstack/react-query';
 import type { Tenant } from '@/types/tenant';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { PageHeader } from '@/components/PageHeader';
 import { type NavigationTabDef, NavigationTabs } from '@/components/NavigationTabs';
 
 export const TenantPage = () => {
-  const location = useLocation();
-  const backReference = location.state && location.state.from;
   const { tenantId } = useParams<{ tenantId: string }>();
   const { isPending, data: tenant } = useQuery<Tenant>({
     queryKey: ['tenant-by-id', tenantId],
@@ -49,12 +47,17 @@ export const TenantPage = () => {
       key: 'tenant-page-entitlement-flows',
       to: `/tenants/${tenantId}/entitlement-flows`,
     },
+    {
+      title: 'Application Flows',
+      key: 'tenant-page-application-flows',
+      to: `/tenants/${tenantId}/application-flows`,
+    },
   ];
 
   return (
     <div className="w-full h-full flex flex-col justify-center">
-      <PageHeader title={`Tenant: ${tenant.name}`} backReference={backReference} />
-      <NavigationTabs tabElements={tabElements} redirectState={{ from: backReference }} />
+      <PageHeader title={`Tenant: ${tenant.name}`} />
+      <NavigationTabs tabElements={tabElements} />
       <div className={'h-full flex'}>
         <Outlet />
       </div>

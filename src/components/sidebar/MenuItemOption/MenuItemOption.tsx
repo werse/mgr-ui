@@ -9,7 +9,7 @@ interface Props {
   groupTitle: string;
 }
 
-export const MenuItemOption = ({ navItem, basePath, groupTitle }: Props) => {
+export const MenuItemOption = ({ navItem, groupTitle }: Props) => {
 
   const location = useLocation();
   return (

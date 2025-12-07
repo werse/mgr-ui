@@ -4,12 +4,12 @@ import { type NavigationTabDef, NavigationTabs } from '@/components/NavigationTa
 import { useQuery } from '@tanstack/react-query';
 import { EntitlementClient } from '@/integration/clients';
 
-export const EntitlementFlowPage = () => {
+export const ApplicationFlowPage = () => {
   const { flowId } = useParams<{ flowId: string }>();
 
   const { isPending, data } = useQuery({
-    queryKey: ['entitlement-flow-by-id', flowId],
-    queryFn: () => EntitlementClient.getEntitlementFlowById(flowId!),
+    queryKey: ['application-flow-by-id', flowId],
+    queryFn: () => EntitlementClient.getApplicationFlowById(flowId!),
   });
 
   if (isPending) {
@@ -23,18 +23,18 @@ export const EntitlementFlowPage = () => {
   const tabElements: NavigationTabDef[] = [
     {
       title: 'Details',
-      key: 'entitlement-flow-page-details',
-      to: `/entitlement-flows/${flowId}/details`,
+      key: 'app-flow-page-details',
+      to: `/application-flows/${flowId}/details`,
     },
     {
-      title: 'Application Flows',
-      key: 'entitlement-flow-page-app-flows',
-      to: `/entitlement-flows/${flowId}/application-flows`,
+      title: 'Flow Stages',
+      key: 'app-flow-stages',
+      to: `/application-flows/${flowId}/stages`,
     },
   ];
   return (
     <div className="w-full flex flex-col justify-center">
-      <PageHeader title={`Entitlement Flow: ${data.id}`} />
+      <PageHeader title={`Application Flow: ${data.id}`} />
       <NavigationTabs tabElements={tabElements} />
       <Outlet />
     </div>

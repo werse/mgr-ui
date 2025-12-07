@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HomePage, NotFoundPage, RootPage } from '@/pages/common';
 import {
+  TenantApplicationFlowsPage,
   TenantAttributesPage,
   TenantDetailsPage,
   TenantEntitlementFlowsPage,
@@ -10,7 +11,10 @@ import {
 } from '@/pages/tenant';
 import { ApplicationDetailsPage, ApplicationPage, ApplicationsPage } from '@/pages/application';
 import {
+  ApplicationFlowDetailsPage,
+  ApplicationFlowPage,
   ApplicationFlowsPage,
+  ApplicationFlowStagesPage,
   EntitlementFlowDetailsPage,
   EntitlementFlowPage,
   EntitlementFlowsPage,
@@ -55,6 +59,10 @@ export const ROUTER = createBrowserRouter([
             path: 'entitlement-flows',
             Component: TenantEntitlementFlowsPage,
           },
+          {
+            path: 'application-flows',
+            Component: TenantApplicationFlowsPage,
+          },
         ],
       },
       {
@@ -75,7 +83,7 @@ export const ROUTER = createBrowserRouter([
           },
           {
             path: 'entitlements',
-            Component: TenantEntitlementsPage,
+            Component: EntitlementsPage,
           },
           {
             path: 'flows',
@@ -112,6 +120,24 @@ export const ROUTER = createBrowserRouter([
       {
         path: 'application-flows',
         Component: ApplicationFlowsPage,
+      },
+      {
+        path: 'application-flows/:flowId',
+        Component: ApplicationFlowPage,
+        children: [
+          {
+            path: '',
+            Component: ApplicationFlowDetailsPage,
+          },
+          {
+            path: 'details',
+            Component: ApplicationFlowDetailsPage,
+          },
+          {
+            path: 'stages',
+            Component: ApplicationFlowStagesPage,
+          },
+        ],
       },
       {
         path: 'module-registry',

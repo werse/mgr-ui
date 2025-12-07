@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import type { Tenant } from '@/types/tenant';
 import { ApplicationClient } from '@/integration/clients';
@@ -7,8 +7,6 @@ import { type NavigationTabDef, NavigationTabs } from '@/components/NavigationTa
 import { PageHeader } from '@/components/PageHeader';
 
 export const ApplicationPage = () => {
-  const location = useLocation();
-  const backReference = location.state && location.state.from;
   const { applicationId } = useParams<{ applicationId: string }>();
   const { isPending, data: application } = useQuery<Tenant>({
     queryKey: ['tenant-by-id', applicationId],
@@ -48,8 +46,8 @@ export const ApplicationPage = () => {
 
   return (
     <div className="w-full h-full flex flex-col justify-center">
-      <PageHeader title={application.name} backReference={backReference} />
-      <NavigationTabs tabElements={tabElements} redirectState={{ from: backReference }} />
+      <PageHeader title={application.name} />
+      <NavigationTabs tabElements={tabElements} />
       <div className={'h-full flex w-full min-w-full'}>
         <Outlet />
       </div>

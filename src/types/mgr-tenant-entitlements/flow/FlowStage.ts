@@ -1,6 +1,7 @@
 import type { ExecutionStatus } from '@/types/mgr-tenant-entitlements/flow';
+import type { Identifiable } from '@/types/common';
 
-export interface FlowStage {
+export interface FlowStage extends Identifiable {
   flowId: string;
   name: string;
   status: ExecutionStatus;
@@ -10,4 +11,4 @@ export interface FlowStage {
   finishedAt: string;
   retriesCount: number;
   retriesInfo?: string;
-};
+}

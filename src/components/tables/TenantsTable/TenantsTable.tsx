@@ -19,14 +19,14 @@ export const TenantsTable = ({ tenants, offset }: Props) => {
         columnDefinitions={[
           {
             title: 'Name',
-            key: 'name',
+            key: 'tenant-name',
             headerClassName: 'w-[25%]',
             render: (tenant) => <TableLink to={tenantDetailsRef(tenant.id)} title={tenant.name} />,
             cellClassName: 'max-w-[20ch] truncate',
           },
           {
             title: 'Description',
-            key: 'description',
+            key: 'tenant-description',
             render: (tenant: Tenant) => <span>{tenant.description || 'N/A'}</span>,
             cellClassName: 'max-w-[40ch] truncate',
           },

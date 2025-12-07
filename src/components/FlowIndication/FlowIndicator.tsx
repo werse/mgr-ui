@@ -4,7 +4,7 @@ interface Props {
   status: string;
 }
 
-export function getFlowStatusColor(status?: string): string {
+const getFlowStatusColor = (status?: string): string => {
   if (!status) {
     return 'bg-gray-400';
   }
@@ -22,7 +22,7 @@ export function getFlowStatusColor(status?: string): string {
     default:
       return 'bg-gray-400';
   }
-}
+};
 
 export const FlowIndicator = ({ status }: Props) => {
   return (
