@@ -14,6 +14,7 @@ type Props = {
 
 export const NavigationTabs = ({ tabElements }: Props) => {
   const getDefaultValue = tabElements.filter((tab) => tab.default)[0]?.title || tabElements[0]?.title || '';
+  console.log({ getDefaultValue });
   return (
     <div className="mt-2 pr-4 pl-4">
       <Tabs defaultValue={getDefaultValue} className="w-full">

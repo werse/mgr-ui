@@ -7,7 +7,6 @@ export function NightModeToggle() {
   const { theme, setTheme } = useTheme();
   const [systemPrefersDark, setSystemPrefersDark] = useState(false);
 
-  // Track system preference so "system" theme can reflect real state
   useEffect(() => {
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => setSystemPrefersDark(e.matches);
@@ -20,7 +19,7 @@ export function NightModeToggle() {
   const isDark = effectiveTheme === 'dark';
 
   const toggleTheme = () => {
-    // Toggle only between explicit light/dark
+    console.log("toggle");
     setTheme(isDark ? 'light' : 'dark');
   };
 

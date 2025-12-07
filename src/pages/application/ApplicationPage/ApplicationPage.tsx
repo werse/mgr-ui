@@ -1,17 +1,12 @@
 import { Outlet, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import type { Tenant } from '@/types/tenant';
-import { ApplicationClient } from '@/integration/clients';
 import { Spinner } from '@/components/ui/spinner.tsx';
 import { type NavigationTabDef, NavigationTabs } from '@/components/NavigationTabs';
 import { PageHeader } from '@/components/PageHeader';
+import { useApplicationById } from '@/hooks';
 
 export const ApplicationPage = () => {
   const { applicationId } = useParams<{ applicationId: string }>();
-  const { isPending, data: application } = useQuery<Tenant>({
-    queryKey: ['tenant-by-id', applicationId],
-    queryFn: () => ApplicationClient.getById(applicationId!),
-  });
+  const { isPending, data: application } = useApplicationById(applicationId);
 
   if (isPending) {
     return (
@@ -45,10 +40,10 @@ export const ApplicationPage = () => {
   ];
 
   return (
-    <div className="w-full h-full flex flex-col justify-center">
-      <PageHeader title={application.name} />
+    <div className="flex flex-col h-full overflow-hidden">
+      <PageHeader title={`${application.id}`} />
       <NavigationTabs tabElements={tabElements} />
-      <div className={'h-full flex w-full min-w-full'}>
+      <div className={'flex h-full w-full overflow-auto'}>
         <Outlet />
       </div>
     </div>

@@ -31,8 +31,8 @@ export class CqlQuery {
   /**
    * Creates a CqlQuery for an exact match on the given parameter and value
    */
-  static exactMatch(param: string, value: string): string {
-    return CqlQuery.exactMatchQuery(param, value).toText();
+  static exactMatch(param: string, value: string): CqlQuery {
+    return CqlQuery.exactMatchQuery(param, value);
   }
 
   /**
@@ -42,7 +42,7 @@ export class CqlQuery {
   static createComplexQuery(
     fieldMatches: Array<{ field: string; value: string }>,
     anyMatches?: Array<{ field: string; values: string[] }>
-  ): string {
+  ): CqlQuery {
     if (!fieldMatches || fieldMatches.length === 0) {
       throw new Error('At least one field match is required');
     }
@@ -51,23 +51,17 @@ export class CqlQuery {
 
     // Add remaining exact matches
     for (let i = 1; i < fieldMatches.length; i++) {
-      query = query.and(
-        CqlQuery.exactMatchQuery(fieldMatches[i].field, fieldMatches[i].value),
-        true
-      );
+      query = query.and(CqlQuery.exactMatchQuery(fieldMatches[i].field, fieldMatches[i].value), true);
     }
 
     // Add any matches
     if (anyMatches && anyMatches.length > 0) {
       for (const anyMatch of anyMatches) {
-        query = query.and(
-          CqlQuery.exactMatchAnyQuery(anyMatch.field, anyMatch.values),
-          true
-        );
+        query = query.and(CqlQuery.exactMatchAnyQuery(anyMatch.field, anyMatch.values), true);
       }
     }
 
-    return query.toText();
+    return query;
   }
 
   /**
@@ -145,22 +139,22 @@ export class CqlQuery {
   /**
    * Creates a CqlQuery for a "contains" match (searches for substring)
    */
-  static contains(param: string, value: string): string {
-    return new CqlQuery(`${param}=*${cqlEncode(value)}*`).toText();
+  static contains(param: string, value: string): CqlQuery {
+    return new CqlQuery(`${param}=*${cqlEncode(value)}*`);
   }
 
   /**
    * Creates a CqlQuery for a "starts with" match
    */
-  static startsWith(param: string, value: string): string {
-    return new CqlQuery(`${param}=${cqlEncode(value)}*`).toText();
+  static startsWith(param: string, value: string): CqlQuery {
+    return new CqlQuery(`${param}=${cqlEncode(value)}*`);
   }
 
   /**
    * Creates a CqlQuery for a "not equal" match
    */
-  static notEqual(param: string, value: string): string {
-    return new CqlQuery(`${param}<>${cqlEncode(value)}`).toText();
+  static notEqual(param: string, value: string): CqlQuery {
+    return new CqlQuery(`${param}<>${cqlEncode(value)}`);
   }
 
   /**

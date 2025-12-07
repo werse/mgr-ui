@@ -24,8 +24,9 @@ export class ApplicationClient {
     return httpClient.get('/applications/{id}/discovery', { pathVariables, queryParams });
   }
 
-  static async getById(id: string): Promise<AppDescriptor> {
+  static async getById(id: string, full: boolean): Promise<AppDescriptor> {
     const pathVariables = [id];
-    return httpClient.get('/applications/{id}', { pathVariables });
+    const queryParams: QueryParams = { full: String(full) };
+    return httpClient.get('/applications/{id}', { pathVariables, queryParams });
   }
 }
