@@ -1,47 +1,33 @@
-import { useSearchParams } from 'react-router-dom';
 import { TenantClient } from '@/integration/clients/TenantClient';
-import { useQuery } from '@tanstack/react-query';
-import { CqlQuery } from '@/lib/cql-query';
-import { DEFAULT_OFFSET, getIntParamOrDefault } from '@/lib/utils.ts';
-import { PaginationFooter } from '@/components/PaginationFooter';
-import { Button } from '@/components/ui/button.tsx';
-import { DynamicIcon } from 'lucide-react/dynamic';
-import { PageHeader } from '@/components/PageHeader';
-import { TenantsTable } from '@/components/tables';
+import { GenericListPage } from '@/pages/common/GenericListPage';
+import { TableLink } from '@/components/TableLink';
+import { tenantDetailsRef } from '@/lib/links.tsx';
+import type { Tenant } from '@/types/tenant';
 
 export const TenantsPage = () => {
-  const [searchParams] = useSearchParams();
-  const pageLimit = 50;
-
-  const spOffset = getIntParamOrDefault(searchParams.get('offset'), DEFAULT_OFFSET);
-  const offset = spOffset >= DEFAULT_OFFSET ? spOffset : DEFAULT_OFFSET;
-
-  const query = CqlQuery.matchAll().toText();
-  const { isPending, data } = useQuery({
-    queryKey: ['tenants', { query, limit: pageLimit, offset }],
-    queryFn: () => TenantClient.findByQuery({ query, limit: pageLimit, offset }),
-  });
-
-  if (isPending) {
-    return <div className="p-6">Loading tenants...</div>;
-  }
-
-  if (!data) {
-    return <div className="p-6">Tenants not found</div>;
-  }
-
   return (
-    <div className="flex flex-col h-full">
-      <PageHeader title="Tenants" totalRecords={data.totalRecords}>
-        <div className="ml-auto flex justify-items-end items-center mr-1">
-          <Button size={'sm'} variant={'default'}>
-            <DynamicIcon name="plus" />
-            <span>Create</span>
-          </Button>
-        </div>
-      </PageHeader>
-      <TenantsTable tenants={data.tenants} offset={offset} />
-      <PaginationFooter totalRecords={data.totalRecords} pageLimit={pageLimit} currentOffset={offset} />
-    </div>
+    <GenericListPage
+      title="Tenants"
+      rootQueryKey="tenants"
+      dataFetcher={(params) => TenantClient.findByQuery(params)}
+      dataExtractor={(resp) => ({data: resp.tenants, totalRecords: resp.totalRecords})}
+      showCreateButton={true}
+      shouldShowHeader={(location) => location.pathname.startsWith('/tenants')}
+      tableColumnDefinitions={[
+        {
+          title: 'Name',
+          key: 'tenant-name',
+          headerClassName: 'w-[25%]',
+          render: (tenant) => <TableLink to={tenantDetailsRef(tenant.id)} title={tenant.name} />,
+          cellClassName: 'max-w-[20ch] truncate',
+        },
+        {
+          title: 'Description',
+          key: 'tenant-description',
+          render: (tenant: Tenant) => <span>{tenant.description || 'N/A'}</span>,
+          cellClassName: 'max-w-[40ch] truncate',
+        },
+      ]}
+    />
   );
 };

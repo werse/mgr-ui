@@ -1,13 +1,10 @@
-import { type Location, type Params, useLocation, useParams, useSearchParams } from 'react-router-dom';
-import { DEFAULT_OFFSET, getIntParamOrDefault } from '@/lib/utils.ts';
+import { type Location, type Params } from 'react-router-dom';
 import { CqlQuery } from '@/lib/cql-query';
-import { useQuery } from '@tanstack/react-query';
 import { EntitlementClient } from '@/integration/clients';
-import { EntitlementsTable } from '@/components/tables';
-import { PageHeader } from '@/components/PageHeader';
-import { Button } from '@/components/ui/button.tsx';
-import { DynamicIcon } from 'lucide-react/dynamic';
-import { PaginationFooter } from '@/components/PaginationFooter';
+import { GenericListPage } from '@/pages/common/GenericListPage';
+import type { EntitlementsCollection } from '@/types/mgr-tenant-entitlements';
+import { TableLink } from '@/components/TableLink';
+import { applicationDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
 
 const getSearchQuery = (params: Readonly<Params<string>>, location: Location): string => {
   const applicationId = params['applicationId'];
@@ -19,42 +16,30 @@ const getSearchQuery = (params: Readonly<Params<string>>, location: Location): s
 };
 
 export const EntitlementsPage = () => {
-  const location = useLocation();
-  const params = useParams();
-  const [searchParams] = useSearchParams();
-  const limit = 50;
-
-  const spOffset = getIntParamOrDefault(searchParams.get('offset'), DEFAULT_OFFSET);
-  const offset = spOffset >= DEFAULT_OFFSET ? spOffset : DEFAULT_OFFSET;
-
-  const query = getSearchQuery(params, location);
-  const { isPending, data } = useQuery({
-    queryKey: ['entitlements', { query: query, limit, offset }],
-    queryFn: () => EntitlementClient.findByQuery(true, { query, limit, offset }),
-  });
-
-  if (isPending) {
-    return <div className="p-6">Loading entitlements...</div>;
-  }
-
-  if (!data) {
-    return <div className="p-6">Entitlements not found</div>;
-  }
-
   return (
-    <div className="flex flex-col h-full min-w-full">
-      {location.pathname.startsWith('/entitlements') && (
-        <PageHeader title="Tenant Entitlements" totalRecords={data.totalRecords}>
-          <div className="ml-auto flex justify-items-end items-center mr-1">
-            <Button size={'sm'} variant={'default'}>
-              <DynamicIcon name="plus" />
-              <span>Create</span>
-            </Button>
-          </div>
-        </PageHeader>
-      )}
-      <EntitlementsTable entitlements={data.entitlements} idxOffset={offset} />
-      <PaginationFooter totalRecords={data.totalRecords} pageLimit={limit} currentOffset={offset} />
-    </div>
+    <GenericListPage<any, EntitlementsCollection>
+      title="Tenant Entitlements"
+      rootQueryKey="entitlements"
+      dataFetcher={(params) => EntitlementClient.findByQuery(true, params)}
+      dataExtractor={(resp) => ({data: resp.entitlements, totalRecords: resp.totalRecords})}
+      showCreateButton={true}
+      getSearchQuery={getSearchQuery}
+      shouldShowHeader={(location) => location.pathname.startsWith('/entitlements')}
+      tableColumnDefinitions={[
+        {
+          title: 'Application ID',
+          key: 'mte-application-id',
+          headerClassName: 'w-[50%]',
+          render: (e) => <TableLink to={applicationDetailsRef(e.applicationId)} title={e.applicationId} />,
+          cellClassName: 'max-w-[60ch] truncate',
+        },
+        {
+          title: 'Tenant Name',
+          key: 'mte-tenant-id',
+          render: (e) => <TableLink to={tenantDetailsRef(e.tenantId)} title={e.tenantName || e.tenantId} />,
+          cellClassName: 'max-w-[40ch] truncate',
+        },
+      ]}
+    />
   );
 };

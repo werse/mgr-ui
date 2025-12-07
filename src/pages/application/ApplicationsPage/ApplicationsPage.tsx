@@ -1,47 +1,32 @@
-import { useSearchParams } from 'react-router-dom';
-import { PageHeader } from '@/components/PageHeader';
-import { Button } from '@/components/ui/button.tsx';
-import { DynamicIcon } from 'lucide-react/dynamic';
-import { DEFAULT_OFFSET, getIntParamOrDefault } from '@/lib/utils.ts';
-import { PaginationFooter } from '@/components/PaginationFooter';
-import { CqlQuery } from '@/lib/cql-query';
-import { useQuery } from '@tanstack/react-query';
 import { ApplicationClient } from '@/integration/clients/ApplicationClient.ts';
-import { ApplicationsTable } from '@/components/tables';
+import { GenericListPage } from '@/pages/common/GenericListPage';
+import { TableLink } from '@/components/TableLink';
+import { applicationDetailsRef } from '@/lib/links.tsx';
 
 export const ApplicationsPage = () => {
-  const [searchParams] = useSearchParams();
-  const pageLimit = 50;
-
-  const spOffset = getIntParamOrDefault(searchParams.get('offset'), DEFAULT_OFFSET);
-  const offset = spOffset >= DEFAULT_OFFSET ? spOffset : DEFAULT_OFFSET;
-
-  const query = CqlQuery.matchAll().toText();
-  const { isPending, data } = useQuery({
-    queryKey: ['applications', { query, limit: pageLimit, offset }],
-    queryFn: () => ApplicationClient.findByQuery({ query, limit: pageLimit, offset, full: false }),
-  });
-
-  if (isPending) {
-    return <div className="p-6">Loading applications...</div>;
-  }
-
-  if (!data) {
-    return <div className="p-6">Applications not found</div>;
-  }
-
   return (
-    <div className="flex flex-col h-full">
-      <PageHeader title="Application Descriptors" totalRecords={data.totalRecords}>
-        <div className="ml-auto flex justify-items-end items-center mr-1">
-          <Button size={'sm'} variant={'default'}>
-            <DynamicIcon name="plus" />
-            <span>Create</span>
-          </Button>
-        </div>
-      </PageHeader>
-      <ApplicationsTable applications={data.applicationDescriptors} idxOffset={offset} />
-      <PaginationFooter totalRecords={data.totalRecords} pageLimit={pageLimit} currentOffset={offset} />
-    </div>
+    <GenericListPage
+      title="Application Descriptors"
+      rootQueryKey="applications"
+      dataFetcher={(params) => ApplicationClient.findByQuery({ ...params, full: false })}
+      dataExtractor={(resp) => ({data: resp.applicationDescriptors, totalRecords: resp.totalRecords})}
+      showCreateButton={true}
+      pageLimit={100}
+      shouldShowHeader={(location) => location.pathname === '/applications'}
+      tableColumnDefinitions={[
+        {
+          title: 'Name',
+          key: 'name',
+          render: (app) => <TableLink to={applicationDetailsRef(app.id)} title={app.id} />,
+          cellClassName: 'max-w-[60ch] truncate',
+        },
+        {
+          title: 'Description',
+          key: 'description',
+          render: (app) => <span>{app.description || 'N/A'}</span>,
+          cellClassName: 'max-w-[40ch] truncate',
+        },
+      ]}
+    />
   );
 };

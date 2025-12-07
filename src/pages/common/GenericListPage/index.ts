@@ -1,0 +1,1 @@
+export { GenericListPage } from './GenericListPage';
