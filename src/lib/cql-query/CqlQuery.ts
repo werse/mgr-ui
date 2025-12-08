@@ -11,12 +11,14 @@ function cqlEncode(value: string): string {
   if (!value) return '';
 
   return value
-    .replace(/\\/g, '\\\\')  // Escape backslashes
-    .replace(/"/g, '\\"')    // Escape quotes
-    .replace(/\*/g, '\\*')   // Escape wildcards
-    .replace(/\?/g, '\\?')   // Escape question marks
-    .replace(/\^/g, '\\^');  // Escape carets
+    .replace(/\\/g, '\\\\') // Escape backslashes
+    .replace(/"/g, '\\"') // Escape quotes
+    .replace(/\*/g, '\\*') // Escape wildcards
+    .replace(/\?/g, '\\?') // Escape question marks
+    .replace(/\^/g, '\\^'); // Escape carets
 }
+
+export type SortOrder = 'ascending' | 'descending';
 
 /**
  * CQL Query builder class
@@ -41,7 +43,7 @@ export class CqlQuery {
    */
   static createComplexQuery(
     fieldMatches: Array<{ field: string; value: string }>,
-    anyMatches?: Array<{ field: string; values: string[] }>
+    anyMatches?: Array<{ field: string; values: string[] }>,
   ): CqlQuery {
     if (!fieldMatches || fieldMatches.length === 0) {
       throw new Error('At least one field match is required');
@@ -84,6 +86,10 @@ export class CqlQuery {
     return new CqlQuery(`(${this.query}) or (${query.query})`);
   }
 
+  sortBy(field: string, order: SortOrder): CqlQuery {
+    return new CqlQuery(`${this.query} sortBy ${field}/sort.${order}`);
+  }
+
   /**
    * Returns the encoded CQL query string representation
    */
@@ -124,15 +130,8 @@ export class CqlQuery {
   /**
    * Creates a CqlQuery for matching any of the provided values with custom mapper
    */
-  static exactMatchAny<T>(
-    param: string,
-    values: T[],
-    mapper: (value: T) => string
-  ): CqlQuery {
-    const stringValues = values
-      .filter((v) => v !== null && v !== undefined)
-      .map(mapper);
-
+  static exactMatchAny<T>(param: string, values: T[], mapper: (value: T) => string): CqlQuery {
+    const stringValues = values.filter((v) => v !== null && v !== undefined).map(mapper);
     return CqlQuery.exactMatchAnyQuery(param, stringValues);
   }
 

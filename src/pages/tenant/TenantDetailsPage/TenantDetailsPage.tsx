@@ -53,7 +53,7 @@ export const TenantDetailsPage = () => {
         {
           key: 'tenant-secure',
           title: 'Secure',
-          render: (tenant) => <Badge variant="secondary"><span>{String(tenant.secure) || 'false'}</span></Badge>,
+          render: (tenant) => <Badge variant="secondary"><span>{tenant.secure ? String(tenant.secure) : 'false'}</span></Badge>,
         },
         {
           key: 'tenant-createdBy',

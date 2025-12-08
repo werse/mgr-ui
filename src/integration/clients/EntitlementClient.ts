@@ -5,6 +5,7 @@ import type {
   ApplicationFlowsCollection,
   EntitlementFlow,
   EntitlementFlowsCollection,
+  FlowStageCollection,
 } from '@/types/mgr-tenant-entitlements/flow';
 import { TenantClient } from '@/integration/clients/TenantClient.ts';
 import { getUniqueIdentifiers } from '@/lib/utils.ts';
@@ -53,6 +54,14 @@ export class EntitlementClient {
       return result;
     }
 
+    return result;
+  }
+
+  static async findFlowStages(applicationFlowId: string): Promise<FlowStageCollection> {
+    const pathVariables = [applicationFlowId];
+    let path = '/application-flows/{applicationFlowId}/stages';
+    const result = (await httpClient.get(path, { pathVariables })) as FlowStageCollection;
+    result.stages.forEach((stage) => (stage.id = stage.name));
     return result;
   }
 

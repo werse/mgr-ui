@@ -1,5 +1,5 @@
 import { TenantClient } from '@/integration/clients/TenantClient';
-import { GenericListPage } from '@/pages/common/GenericListPage';
+import { GenericListPage } from '@/pages/common';
 import { TableLink } from '@/components/TableLink';
 import { tenantDetailsRef } from '@/lib/links.tsx';
 import type { Tenant } from '@/types/tenant';
@@ -10,7 +10,7 @@ export const TenantsPage = () => {
       title="Tenants"
       rootQueryKey="tenants"
       dataFetcher={(params) => TenantClient.findByQuery(params)}
-      dataExtractor={(resp) => ({data: resp.tenants, totalRecords: resp.totalRecords})}
+      dataExtractor={(resp) => ({ data: resp.tenants, totalRecords: resp.totalRecords })}
       showCreateButton={true}
       shouldShowHeader={(location) => location.pathname.startsWith('/tenants')}
       tableColumnDefinitions={[

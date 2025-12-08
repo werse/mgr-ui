@@ -17,7 +17,7 @@ const getFlowStatusColor = (status?: string): string => {
     case 'failed':
     case 'cancellation_failed':
       return 'bg-red-500';
-    case 'canceled':
+    case 'cancelled':
       return 'bg-blue-500';
     default:
       return 'bg-gray-400';

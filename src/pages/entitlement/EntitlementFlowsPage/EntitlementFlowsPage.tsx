@@ -1,39 +1,53 @@
-import { PageHeader } from '@/components/PageHeader/index.ts';
-import { useSearchParams } from 'react-router-dom';
-import { DEFAULT_OFFSET, getIntParamOrDefault } from '@/lib/utils.ts';
-import { PaginationFooter } from '@/components/PaginationFooter/index.ts';
-import { EntitlementFlowsTable } from '@/components/tables';
 import { CqlQuery } from '@/lib/cql-query';
-import { useQuery } from '@tanstack/react-query';
 import { EntitlementClient } from '@/integration/clients';
+import { GenericListPage } from '@/pages/common';
+import { FlowIndicator } from '@/components/FlowIndication';
+import { TableLink } from '@/components/TableLink';
+import { entitlementFlowDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
 
 export const EntitlementFlowsPage = () => {
-  const [searchParams] = useSearchParams();
-
-  const spOffset = getIntParamOrDefault(searchParams.get('offset'), DEFAULT_OFFSET);
-  const offset = spOffset >= DEFAULT_OFFSET ? spOffset : DEFAULT_OFFSET;
-  const limit = 25;
-
-  const query = CqlQuery.rawQuery('cql.allRecords=1 sortBy startedAt/sort.descending').toText();
-  const { isPending, data } = useQuery({
-    staleTime: 0,
-    queryKey: ['entitlement-flows', { query, limit, offset }],
-    queryFn: () => EntitlementClient.findEntitlementFlowsByQuery(true, { flowQuery: query, limit, offset }),
-  });
-
-  if (isPending) {
-    return <div className="p-6">Loading entitlement flows...</div>;
-  }
-
-  if (!data) {
-    return <div className="p-6">Entitlement flows not found</div>;
-  }
-
   return (
-    <div className="flex flex-col h-full min-w-full">
-      <PageHeader title="Entitlement Flows" totalRecords={data.totalRecords} />
-      <EntitlementFlowsTable entitlementFlows={data.flows} idxOffset={offset} />
-      <PaginationFooter totalRecords={data.totalRecords} pageLimit={limit} currentOffset={offset} />
-    </div>
+    <GenericListPage
+      title="Entitlement Flows"
+      rootQueryKey={'entitlement-flows'}
+      defaultCqlQuery={CqlQuery.matchAll().sortBy('startedAt', 'descending')}
+      dataFetcher={(params) => EntitlementClient.findEntitlementFlowsByQuery(true, params)}
+      dataExtractor={(resp) => ({ data: resp.flows, totalRecords: resp.totalRecords })}
+      tableColumnDefinitions={[
+        {
+          title: '',
+          key: 'grade',
+          headerClassName: 'w-[2%]',
+          render: (f) => <FlowIndicator status={f.status} />,
+        },
+        {
+          title: 'Type',
+          key: 'type',
+          headerClassName: 'w-[10%]',
+          cellClassName: 'uppercase',
+          render: (f) => <TableLink to={entitlementFlowDetailsRef(f.id)} title={f.type} />,
+        },
+        {
+          title: 'Tenant Name',
+          key: 'tenant-name',
+          render: (f) => <TableLink to={tenantDetailsRef(f.tenantId)} title={f.tenantName || f.tenantId} />,
+        },
+        {
+          title: 'Start Time',
+          key: 'startedAt',
+          headerClassName: 'w-[25%]',
+          cellClassName: 'max-w-[10ch] truncate',
+          render: (f) => <span>{f.startedAt}</span>,
+        },
+        {
+          title: 'End Time',
+          key: 'finishedAt',
+          headerClassName: 'w-[25%]',
+          cellClassName: 'max-w-[10ch] truncate',
+          render: (f) => <span>{f.finishedAt}</span>,
+        },
+      ]}
+      shouldShowHeader={() => true}
+    />
   );
 };

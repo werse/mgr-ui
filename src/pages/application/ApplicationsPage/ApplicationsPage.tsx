@@ -1,5 +1,5 @@
 import { ApplicationClient } from '@/integration/clients/ApplicationClient.ts';
-import { GenericListPage } from '@/pages/common/GenericListPage';
+import { GenericListPage } from '@/pages/common';
 import { TableLink } from '@/components/TableLink';
 import { applicationDetailsRef } from '@/lib/links.tsx';
 
@@ -9,7 +9,7 @@ export const ApplicationsPage = () => {
       title="Application Descriptors"
       rootQueryKey="applications"
       dataFetcher={(params) => ApplicationClient.findByQuery({ ...params, full: false })}
-      dataExtractor={(resp) => ({data: resp.applicationDescriptors, totalRecords: resp.totalRecords})}
+      dataExtractor={(resp) => ({ data: resp.applicationDescriptors, totalRecords: resp.totalRecords })}
       showCreateButton={true}
       pageLimit={100}
       shouldShowHeader={(location) => location.pathname === '/applications'}

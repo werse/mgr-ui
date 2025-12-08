@@ -1,18 +1,18 @@
 import { type Location, type Params } from 'react-router-dom';
 import { CqlQuery } from '@/lib/cql-query';
 import { EntitlementClient } from '@/integration/clients';
-import { GenericListPage } from '@/pages/common/GenericListPage';
+import { GenericListPage } from '@/pages/common';
 import type { EntitlementsCollection } from '@/types/mgr-tenant-entitlements';
 import { TableLink } from '@/components/TableLink';
 import { applicationDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
 
-const getSearchQuery = (params: Readonly<Params<string>>, location: Location): string => {
+const getSearchQuery = (params: Readonly<Params<string>>, location: Location): CqlQuery => {
   const applicationId = params['applicationId'];
   if (applicationId && location.pathname.startsWith('/applications')) {
-    return CqlQuery.exactMatch('applicationId', applicationId).toText();
+    return CqlQuery.exactMatch('applicationId', applicationId);
   }
 
-  return CqlQuery.matchAll().toText();
+  return CqlQuery.matchAll();
 };
 
 export const EntitlementsPage = () => {
@@ -21,7 +21,7 @@ export const EntitlementsPage = () => {
       title="Tenant Entitlements"
       rootQueryKey="entitlements"
       dataFetcher={(params) => EntitlementClient.findByQuery(true, params)}
-      dataExtractor={(resp) => ({data: resp.entitlements, totalRecords: resp.totalRecords})}
+      dataExtractor={(resp) => ({ data: resp.entitlements, totalRecords: resp.totalRecords })}
       showCreateButton={true}
       getSearchQuery={getSearchQuery}
       shouldShowHeader={(location) => location.pathname.startsWith('/entitlements')}

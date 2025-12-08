@@ -14,11 +14,11 @@ import {
   ApplicationFlowDetailsPage,
   ApplicationFlowPage,
   ApplicationFlowsPage,
-  ApplicationFlowStagesPage,
   EntitlementFlowDetailsPage,
   EntitlementFlowPage,
   EntitlementFlowsPage,
   EntitlementsPage,
+  FlowStagesPage,
 } from '@/pages/entitlement';
 import { ModuleRegistryPage, ModulesDiscoveryPage } from '@/pages/module';
 
@@ -122,7 +122,7 @@ export const ROUTER = createBrowserRouter([
         Component: ApplicationFlowsPage,
       },
       {
-        path: 'application-flows/:flowId',
+        path: 'application-flows/:applicationFlowId',
         Component: ApplicationFlowPage,
         children: [
           {
@@ -135,7 +135,7 @@ export const ROUTER = createBrowserRouter([
           },
           {
             path: 'stages',
-            Component: ApplicationFlowStagesPage,
+            Component: FlowStagesPage,
           },
         ],
       },
