@@ -38,6 +38,7 @@ interface GenericListPageConfig<TData extends Identifiable, TResponse> {
   customNotFoundMessage?: string;
   shouldShowHeader: (location: Location, params: Readonly<Params<string>>) => boolean;
   additionalQueryOptions?: Record<string, unknown>;
+  showPaginationFooter?: boolean;
 }
 
 export function GenericListPage<TData extends Identifiable, TResponse>({
@@ -56,6 +57,7 @@ export function GenericListPage<TData extends Identifiable, TResponse>({
   customLoadingMessage,
   customNotFoundMessage,
   shouldShowHeader,
+  showPaginationFooter = true,
 }: GenericListPageConfig<TData, TResponse>) {
   const location = useLocation();
   const pathParams = useParams();
@@ -113,7 +115,9 @@ export function GenericListPage<TData extends Identifiable, TResponse>({
           columnDefinitions={tableColumnDefinitions}
         />
       </ScrollArea>
-      <PaginationFooter totalRecords={pageResponse.totalRecords} pageLimit={pageLimit} currentOffset={offset} />
+      {showPaginationFooter && (
+        <PaginationFooter totalRecords={pageResponse.totalRecords} pageLimit={pageLimit} currentOffset={offset} />
+      )}
     </div>
   );
 }

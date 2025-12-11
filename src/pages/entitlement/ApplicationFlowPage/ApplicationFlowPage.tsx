@@ -33,10 +33,12 @@ export const ApplicationFlowPage = () => {
     },
   ];
   return (
-    <div className="w-full flex flex-col justify-center">
+    <div className="flex flex-col h-full">
       <PageHeader title={`Application Flow: ${data.id}`} />
       <NavigationTabs tabElements={tabElements} />
-      <Outlet />
+      <div className={'flex h-full w-full overflow-auto'}>
+        <Outlet />
+      </div>
     </div>
   );
 };

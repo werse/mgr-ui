@@ -2,7 +2,6 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components
 import { cn } from '@/lib/utils.ts';
 import type { Identifiable } from '@/types/common';
 import type { Key } from 'react';
-import { ScrollArea } from '@/components/ui/scroll-area';
 
 export type DataTableColumnDefinition<T> = {
   title: string;
@@ -30,7 +29,7 @@ export const EntitiesDataTable = <T extends Identifiable>({
 }: Props<T>) => {
   const extraTableCellStyle = 'pl-2 py-1 text-foreground/75';
   return (
-    <ScrollArea className="flex-1 p-4 overflow-auto">
+    <div className="flex-1 p-4 overflow-auto">
       <Table>
         <TableHeader>
           <TableRow className="font-semibold text-sm select-text hover:bg-transparent text-foreground/80">
@@ -64,6 +63,6 @@ export const EntitiesDataTable = <T extends Identifiable>({
           ))}
         </TableBody>
       </Table>
-    </ScrollArea>
+    </div>
   );
 };

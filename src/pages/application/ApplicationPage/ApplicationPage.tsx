@@ -40,10 +40,10 @@ export const ApplicationPage = () => {
   ];
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col h-full">
       <PageHeader title={`${application.id}`} />
       <NavigationTabs tabElements={tabElements} />
-      <div className={'flex h-full w-full overflow-auto'}>
+      <div className={'h-full w-full overflow-auto'}>
         <Outlet />
       </div>
     </div>

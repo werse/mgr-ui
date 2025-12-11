@@ -61,7 +61,7 @@ export class EntitlementClient {
     const pathVariables = [applicationFlowId];
     let path = '/application-flows/{applicationFlowId}/stages';
     const result = (await httpClient.get(path, { pathVariables })) as FlowStageCollection;
-    result.stages.forEach((stage) => (stage.id = stage.name));
+    result.stages.forEach((stage) => (stage.id = `${stage.flowId}-${stage.name}`));
     return result;
   }
 

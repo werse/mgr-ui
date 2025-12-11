@@ -6,5 +6,4 @@ export { EntitlementFlowDetailsPage } from '@/pages/entitlement/EntitlementFlowD
 export { FlowStagesPage } from '@/pages/entitlement/FlowStagesPage';
 export { ApplicationFlowPage } from '@/pages/entitlement/ApplicationFlowPage';
 export { ApplicationFlowsPage } from '@/pages/entitlement/ApplicationFlowsPage';
-export { ApplicationFlowStagesPage } from '@/pages/entitlement/ApplicationFlowStagesPage';
 export { ApplicationFlowDetailsPage } from '@/pages/entitlement/ApplicationFlowDetailsPage';

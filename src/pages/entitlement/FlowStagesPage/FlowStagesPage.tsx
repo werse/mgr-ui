@@ -10,8 +10,10 @@ export const FlowStagesPage = () => {
       rootQueryKey={'flow-stages'}
       defaultCqlQuery={CqlQuery.matchAll()}
       dataFetcher={(_, pathParams) => EntitlementClient.findFlowStages(pathParams['applicationFlowId']!)}
+      getSearchQuery={(pathParams) => CqlQuery.exactMatch('id', pathParams['applicationFlowId']!)}
       dataExtractor={(resp) => ({ data: resp.stages, totalRecords: resp.totalRecords })}
       shouldShowHeader={() => false}
+      showPaginationFooter={false}
       tableColumnDefinitions={[
         {
           title: '',

@@ -8,11 +8,15 @@ export function RootPage() {
     <SidebarProvider className="select-none">
       <AppSidebar />
 
-      <SidebarInset className="relative md:peer-data-[variant=inset]:rounded-none
-        md:peer-data-[variant=inset]:m-0 md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-0">
-        <main className="min-h-[calc(100vh-var(--spacing)*12)] max-h-[calc(100vh-var(--spacing)*12)]">
+      <SidebarInset
+        className="relative md:peer-data-[variant=inset]:rounded-none
+        md:peer-data-[variant=inset]:m-0 md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-0"
+      >
+        <main className="h-screen max-h-screen min-h-screen">
           <SiteHeader />
-          <Outlet />
+          <div className={'max-h-[calc(100vh-var(--spacing)*12)] h-[calc(100vh-var(--spacing)*12)]'}>
+            <Outlet />
+          </div>
         </main>
       </SidebarInset>
     </SidebarProvider>
