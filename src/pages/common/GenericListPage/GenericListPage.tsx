@@ -106,7 +106,7 @@ export function GenericListPage<TData extends Identifiable, TResponse>({
         </PageHeader>
       )}
       <ScrollArea
-        className={`overflow-auto flex-1 p-4 transition-opacity duration-200 ${isFetching ? 'opacity-50 disabled' : 'opacity-100'}`}
+        className={`flex-1 min-h-0 p-4 transition-opacity duration-200 ${isFetching ? 'opacity-50 disabled' : 'opacity-100'}`}
       >
         <EntitiesDataTable
           data={pageResponse.data}

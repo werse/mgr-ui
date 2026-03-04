@@ -1,6 +1,7 @@
 import { CqlQuery } from '@/lib/cql-query';
 import { EntitlementClient } from '@/integration/clients';
 import { FlowIndicator } from '@/components/FlowIndication';
+import { FlowTiming } from '@/components/FlowTiming';
 import { TableLink } from '@/components/TableLink';
 import { applicationDetailsRef, applicationFlowDetailsRef, tenantDetailsRef } from '@/lib/links.tsx';
 import { GenericListPage } from '@/pages/common';
@@ -50,18 +51,10 @@ export const ApplicationFlowsPage = () => {
           render: (f) => <TableLink to={tenantDetailsRef(f.tenantId)} title={f.tenantName || f.tenantId} />,
         },
         {
-          title: 'Start Time',
-          key: 'startedAt',
+          title: 'Timing',
+          key: 'timing',
           headerClassName: 'w-[18%]',
-          cellClassName: 'max-w-[10ch] truncate',
-          render: (f) => <span>{f.startedAt}</span>,
-        },
-        {
-          title: 'End Time',
-          key: 'finishedAt',
-          headerClassName: 'w-[18%]',
-          cellClassName: 'max-w-[10ch] truncate',
-          render: (f) => <span>{f.finishedAt}</span>,
+          render: (f) => <FlowTiming startedAt={f.startedAt} finishedAt={f.finishedAt} />,
         },
       ]}
     />

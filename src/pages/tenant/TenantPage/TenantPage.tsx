@@ -55,10 +55,10 @@ export const TenantPage = () => {
   ];
 
   return (
-    <div className="w-full h-full flex flex-col justify-center">
+    <div className="w-full h-full flex flex-col">
       <PageHeader title={`Tenant: ${tenant.name}`} />
       <NavigationTabs tabElements={tabElements} />
-      <div className={'h-full flex'}>
+      <div className={'flex-1 min-h-0 flex overflow-hidden'}>
         <Outlet />
       </div>
     </div>

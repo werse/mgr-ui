@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import {createBrowserRouter, Navigate} from 'react-router-dom';
 import { HomePage, NotFoundPage, RootPage } from '@/pages/common';
 import {
   TenantApplicationFlowsPage,
@@ -41,7 +41,7 @@ export const ROUTER = createBrowserRouter([
         children: [
           {
             path: '',
-            Component: TenantDetailsPage,
+            element: <Navigate to='details' replace />,
           },
           {
             path: 'details',
@@ -75,7 +75,7 @@ export const ROUTER = createBrowserRouter([
         children: [
           {
             path: '',
-            Component: ApplicationDetailsPage,
+            element: <Navigate to='details' replace />,
           },
           {
             path: 'details',
@@ -105,7 +105,7 @@ export const ROUTER = createBrowserRouter([
         children: [
           {
             path: '',
-            Component: EntitlementFlowDetailsPage,
+            element: <Navigate to='details' replace />,
           },
           {
             path: 'details',
@@ -127,7 +127,7 @@ export const ROUTER = createBrowserRouter([
         children: [
           {
             path: '',
-            Component: ApplicationFlowDetailsPage,
+            element: <Navigate to='details' replace />,
           },
           {
             path: 'details',

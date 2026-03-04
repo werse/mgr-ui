@@ -32,6 +32,7 @@ export const ApplicationFlowPage = () => {
       to: `/application-flows/${applicationFlowId}/stages`,
     },
   ];
+
   return (
     <div className="flex flex-col h-full">
       <PageHeader title={`Application Flow: ${data.id}`} />

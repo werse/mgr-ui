@@ -1,6 +1,7 @@
 import { CqlQuery } from '@/lib/cql-query';
 import { EntitlementClient } from '@/integration/clients';
 import { FlowIndicator } from '@/components/FlowIndication';
+import { FlowTiming } from '@/components/FlowTiming';
 import { GenericListPage } from '@/pages/common';
 
 export const FlowStagesPage = () => {
@@ -29,18 +30,10 @@ export const FlowStagesPage = () => {
           render: (f) => <span>{f.name}</span>,
         },
         {
-          title: 'Start Time',
-          key: 'stage-startedAt',
+          title: 'Timing',
+          key: 'stage-timing',
           headerClassName: 'w-[18%]',
-          cellClassName: 'max-w-[10ch] truncate',
-          render: (f) => <span>{f.startedAt}</span>,
-        },
-        {
-          title: 'End Time',
-          key: 'stage-finishedAt',
-          headerClassName: 'w-[18%]',
-          cellClassName: 'max-w-[10ch] truncate',
-          render: (f) => <span>{f.finishedAt}</span>,
+          render: (f) => <FlowTiming startedAt={f.startedAt} finishedAt={f.finishedAt} />,
         },
       ]}
     />

@@ -3,7 +3,7 @@ import { Spinner } from '@/components/ui/spinner.tsx';
 import { EntityDetails } from '@/components/EntityDetails';
 import { useApplicationById } from '@/hooks';
 import { Badge } from '@/components/ui/badge.tsx';
-import type { ModuleDescriptor } from '@/types/mgr-applications';
+import { ApplicationModules } from '@/components/ApplicationModules';
 
 export const ApplicationDetailsPage = () => {
   const { applicationId } = useParams<{ applicationId: string }>();
@@ -21,26 +21,6 @@ export const ApplicationDetailsPage = () => {
   if (!application) {
     return <div className="p-6">Application not found</div>;
   }
-
-  const renderModules = (modules: ModuleDescriptor[]) => {
-    return (
-      <div className="flex flex-wrap -my-1">
-        {modules
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((module) => (
-            <Badge
-              variant="outline"
-              key={`${module.name}-${module.version}`}
-              className={`my-1 max-w-[30%] min-w-[30%] mr-[2%] last:mr-0`}
-            >
-              <span
-                className={'pl-2 max-w-[60ch] truncate text-left hover:underline hover:cursor-pointer'}
-              >{`${module.name}-${module.version}`}</span>
-            </Badge>
-          ))}
-      </div>
-    );
-  };
 
   //todo: Navigation to parent applications and
   //todo: Show module details page
@@ -83,12 +63,12 @@ export const ApplicationDetailsPage = () => {
         {
           key: 'app-be-modules',
           title: 'Modules',
-          render: (app) => renderModules(app.modules || []),
+          render: (app) => <ApplicationModules modules={app.modules || []} />,
         },
         {
           key: 'app-ui-modules',
           title: 'UI Modules',
-          render: (app) => renderModules(app.uiModules || []),
+          render: (app) => <ApplicationModules modules={app.uiModules || []} />,
         },
         {
           key: 'app-createdBy',

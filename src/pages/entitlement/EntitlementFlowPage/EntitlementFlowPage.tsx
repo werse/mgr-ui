@@ -32,6 +32,7 @@ export const EntitlementFlowPage = () => {
       to: `/entitlement-flows/${flowId}/application-flows`,
     },
   ];
+
   return (
     <div className="w-full flex flex-col justify-center">
       <PageHeader title={`Entitlement Flow: ${data.id}`} />
